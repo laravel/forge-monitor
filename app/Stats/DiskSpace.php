@@ -39,7 +39,7 @@ class DiskSpace extends AbstractStat implements Stat
         $op = $this->getOperator();
 
         $results = DB::select("SELECT
-    CASE WHEN free {$op} ? THEN 'ALERT' ELSE 'OK' END AS currentState,
+    CASE WHEN used {$op} ? THEN 'ALERT' ELSE 'OK' END AS currentState,
     IFNULL(alerts.monitor_state, 'UNKNOWN') AS lastState
 FROM (
     SELECT * FROM disk_usages ORDER BY created_at DESC LIMIT 1
