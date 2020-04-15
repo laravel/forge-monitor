@@ -19,6 +19,8 @@ class CreateAlertsTable extends Migration
             $table->string('monitor_type');
             $table->char('monitor_state', 7)->default('UNKNOWN');
             $table->timestamps();
+
+            $table->index('created_at');
         });
     }
 }

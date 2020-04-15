@@ -19,6 +19,8 @@ class CreateLoadAvgsTable extends Migration
             $table->unsignedInteger('load_avg_percent')->nullable();
             $table->unsignedInteger('cpus');
             $table->timestamps();
+
+            $table->index('created_at');
         });
     }
 }

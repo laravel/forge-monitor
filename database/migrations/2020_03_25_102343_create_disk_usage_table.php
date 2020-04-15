@@ -19,6 +19,8 @@ class CreateDiskUsageTable extends Migration
             $table->unsignedInteger('free');
             $table->unsignedInteger('used');
             $table->timestamps();
+
+            $table->index('created_at');
         });
     }
 }

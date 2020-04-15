@@ -20,6 +20,8 @@ class CreateMemoryUsageTable extends Migration
             $table->unsignedInteger('used');
             $table->unsignedInteger('free');
             $table->timestamps();
+
+            $table->index('created_at');
         });
     }
 }
