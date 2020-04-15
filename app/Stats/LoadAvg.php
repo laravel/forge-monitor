@@ -31,7 +31,7 @@ class LoadAvg extends AbstractStat implements Stat
 
             // https://stackoverflow.com/a/38085813
             $loads = sys_getloadavg();
-            $loadPercent = round($loads[0] / ($cores + 1) * 100, 2);
+            $loadPercent = round($loads[0] / max(1, $cores) * 100, 2);
 
             LoadAvgModel::create([
                 'load_avg' => $loads[0],
