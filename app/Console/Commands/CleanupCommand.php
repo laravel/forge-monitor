@@ -28,8 +28,8 @@ class CleanupCommand extends Command
      */
     public function handle()
     {
-        DB::delete('DELETE FROM load_avgs WHERE created_at <= DATETIME("NOW", "-INTERVAL 1 MONTH")');
-        DB::delete('DELETE FROM disk_usages WHERE created_at <= DATETIME("NOW", "-INTERVAL 1 MONTH")');
-        DB::delete('DELETE FROM memory_usages WHERE created_at <= DATETIME("NOW", "-INTERVAL 1 MONTH")');
+        DB::delete('DELETE FROM load_avgs WHERE created_at <= DATETIME("NOW", "-INTERVAL 1 WEEK")');
+        DB::delete('DELETE FROM disk_usages WHERE created_at <= DATETIME("NOW", "-INTERVAL 1 WEEK")');
+        DB::delete('DELETE FROM memory_usages WHERE created_at <= DATETIME("NOW", "-INTERVAL 1 WEEK")');
     }
 }
