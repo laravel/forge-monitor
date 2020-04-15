@@ -47,8 +47,8 @@ class Memory implements Stat
 
             if (is_readable('/proc/meminfo')) {
                 $total = (int) $this->executeCommand("grep MemTotal /proc/meminfo | awk '{print $2}'");
-                $free = (int) $this->executeCommand("grep MemFree /proc/meminfo | awk '{print $2}'");
-                $used = $total - $free;
+                $available = (int) $this->executeCommand("grep MemAvailable /proc/meminfo | awk '{print $2}'");
+                $used = $total - $available;
 
                 $memory = [
                     'total' => $total,
