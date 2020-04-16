@@ -19,8 +19,8 @@ class DiskSpace extends AbstractStat implements Stat
         $freeSpace = disk_free_space('/');
         $usedSpace = $totalSpace - $freeSpace;
 
-        $usedPercent = (($totalSpace - $usedSpace) / $totalSpace) * 100;
-        $freePercent = (($totalSpace - $freeSpace) / $totalSpace) * 100;
+        $usedPercent = ($usedSpace / $totalSpace) * 100;
+        $freePercent = ($freeSpace / $totalSpace) * 100;
 
         DiskUsage::create([
             'total' => $totalSpace,
