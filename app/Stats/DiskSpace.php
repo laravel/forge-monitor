@@ -24,8 +24,8 @@ class DiskSpace extends AbstractStat implements Stat
 
         DiskUsage::create([
             'total' => $totalSpace,
-            'free' => $usedPercent,
-            'used' => $freePercent,
+            'free' => $freePercent,
+            'used' => $usedPercent,
         ]);
     }
 
