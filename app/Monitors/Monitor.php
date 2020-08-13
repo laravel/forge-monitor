@@ -6,6 +6,7 @@ use App\Stats\CpuLoad;
 use App\Stats\DiskSpace;
 use App\Stats\FreeMemory;
 use App\Stats\LoadAvg;
+use App\Stats\ServerHealth;
 use App\Stats\UsedMemory;
 
 class Monitor
@@ -78,6 +79,7 @@ class Monitor
             case 'cpu_load': return new LoadAvg($this);
             case 'free_memory': return new FreeMemory($this);
             case 'used_memory': return new UsedMemory($this);
+            case 'health': return new ServerHealth($this);
         }
     }
 }
