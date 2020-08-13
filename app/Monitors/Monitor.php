@@ -61,8 +61,8 @@ class Monitor
         $this->minutes = (int) $minutes;
         $this->token = $token;
 
-        // Disk Monitors only need 1 check.
-        if ($this->type === 'disk') {
+        // Disk and Health Monitors only need 1 check.
+        if ($this->type === 'disk' || $this->type === 'health') {
             $this->minutes = 1;
         }
     }

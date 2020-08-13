@@ -50,7 +50,7 @@ abstract class AbstractStat
         $this->totalResults = count($results);
 
         // Not enough data to check.
-        if ($this->monitor->minutes > 0 && $this->totalResults < $this->monitor->minutes) {
+        if ($this->totalResults < $this->monitor->minutes) {
             return false;
         }
 
