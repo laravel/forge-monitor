@@ -16,7 +16,7 @@
         "laravel/framework": "^7.0",
         "spatie/once": "^2.2|^3.0",
         "symfony/process": "^5.0",
-        "titasgailius/terminal": "^0.2.4",
+        "titasgailius/terminal": "^1.0",
         "yosymfony/toml": "^1.0"
     },
     "require-dev": {

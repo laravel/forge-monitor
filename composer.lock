@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "07f2a111d0315f488a3154f61f48f42a",
+    "content-hash": "948fb5b537e3e04d5fa5b4e6b845e142",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4365,16 +4365,16 @@
         },
         {
             "name": "titasgailius/terminal",
-            "version": "0.2.7",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/TitasGailius/terminal.git",
-                "reference": "15c6d9a80263feeb05a4752c0f3a7e4c282d8f50"
+                "reference": "33396b5128d8fb1ee108bb1b4ed64ba74c85c642"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/TitasGailius/terminal/zipball/15c6d9a80263feeb05a4752c0f3a7e4c282d8f50",
-                "reference": "15c6d9a80263feeb05a4752c0f3a7e4c282d8f50",
+                "url": "https://api.github.com/repos/TitasGailius/terminal/zipball/33396b5128d8fb1ee108bb1b4ed64ba74c85c642",
+                "reference": "33396b5128d8fb1ee108bb1b4ed64ba74c85c642",
                 "shasum": ""
             },
             "require": {
@@ -4414,7 +4414,7 @@
                 "issues": "https://github.com/TitasGailius/terminal/issues",
                 "source": "https://github.com/TitasGailius/terminal"
             },
-            "time": "2020-04-13T16:24:00+00:00"
+            "time": "2021-01-24T15:15:06+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
