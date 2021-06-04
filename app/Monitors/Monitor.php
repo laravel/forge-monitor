@@ -31,7 +31,7 @@ class Monitor
     public $threshold;
 
     /**
-     * @var minutes
+     * @var int
      */
     public $minutes;
 
