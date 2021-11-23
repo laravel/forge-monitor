@@ -12,6 +12,7 @@
         "dnoegel/php-xdg-base-dir": "^0.1.1",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
+        "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "spatie/once": "^2.2|^3.0",
         "symfony/process": "^5.0",
