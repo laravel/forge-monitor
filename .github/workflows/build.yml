@@ -20,11 +20,11 @@ jobs:
       - name: Clone PHPMicro
         run: git clone git@github.com:dixyes/phpmicro php-src/sapi/micro
 
-     - name: Build
-       run: ./buildconf --force
+      - name: Build
+        run: ./buildconf --force
 
-     - name: Configure
-       run: ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
+      - name: Configure
+        run: ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
 
       - name: Make Micro
         run: make micro
