@@ -26,12 +26,11 @@ jobs:
      - name: Configure
        run: ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
 
-    - name: Make Micro
-      run: make micro
+      - name: Make Micro
+        run: make micro
 
+      - name: Build Forge Monitor
+        run: ./application app:build --build-version=unreleased
 
-    - name: Build Forge Monitor
-      run: ./application app:build --build-version=unreleased
-
-    - name: Compile Forge Monitor
-      run: cat php-src/sapi/micro/micro.sfx builds/application > laravel-monitor
+      - name: Compile Forge Monitor
+        run: cat php-src/sapi/micro/micro.sfx builds/application > laravel-monitor
