@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Build Forge Monitor
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Dependencies
+        run: apt-get -y install flex bison re2c
+
+      - name: Check out source code
+        uses: actions/checkout@v2
+
+      - name: Clone PHP
+        run: git clone --single-branch PHP-8.0.19 git@github.com:php/php-src.git
+
+      - name: Clone PHPMicro
+        run: git clone git@github.com:dixyes/phpmicro php-src/sapi/micro
+
+     - name: Build
+       run: ./buildconf --force
+
+     - name: Configure
+       run: ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
+
+    - name: Make Micro
+      run: make micro
+
+
+    - name: Build Forge Monitor
+      run: ./application app:build --build-version=unreleased
+
+    - name: Compile Forge Monitor
+      run: cat php-src/sapi/micro/micro.sfx builds/application > laravel-monitor
