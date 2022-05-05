@@ -1,12 +1,9 @@
 name: Build
 
-on:
-  push:
-    branches:
-      - master
+on: [push, pull_request]
 
 jobs:
-  build:
+  build-forge-monitor:
     name: Build Forge Monitor
     runs-on: ubuntu-latest
 
