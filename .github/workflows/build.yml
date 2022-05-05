@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Install Dependencies
-        run: apt-get -y install flex bison re2c
+        run: sudo apt-get -y install flex bison re2c
 
       - name: Check out source code
         uses: actions/checkout@v2
