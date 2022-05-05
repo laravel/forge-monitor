@@ -6,6 +6,7 @@ use App\Config\FileFinder;
 use App\Monitors\MonitorConfig;
 use Illuminate\Support\ServiceProvider;
 use Symfony\Component\Finder\Finder;
+use XdgBaseDir\Xdg;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,20 +27,32 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (! $this->app->runningInConsole()) {
-            return;
-        }
-
         $this->app->singleton(FileFinder::class, function ($app) {
             $finder = new Finder();
 
             return (new FileFinder($finder))
-                ->addDirectory(home_data_path())
-                ->addDirectory(realpath(__DIR__.'/../../'));
+                ->addDirectory($this->getHomePath());
         });
 
         $this->app->singleton(MonitorConfig::class, function ($app) {
             return new MonitorConfig(app(FileFinder::class));
         });
+    }
+
+    /**
+     * Get the homepath.
+     *
+     * @param  string|null  $path
+     * @return string
+     */
+    protected function getHomePath($path = null)
+    {
+        $homePath = (new Xdg())->getHomeDir();
+
+        if (!$path) {
+            return $homePath;
+        }
+
+        return $homePath.DIRECTORY_SEPARATOR.$path;
     }
 }
