@@ -21,13 +21,13 @@ jobs:
         run: git clone https://github.com/dixyes/phpmicro.git php-src/sapi/micro
 
       - name: Build
-        run: ./buildconf --force
+        run: ./php-src/buildconf --force
 
       - name: Configure
-        run: ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
+        run: ./php-src/configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
 
       - name: Make Micro
-        run: make micro
+        run: ./php-src/make micro
 
       - name: Build Forge Monitor
         run: ./application app:build --build-version=unreleased
