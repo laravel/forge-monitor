@@ -27,7 +27,7 @@ jobs:
         run: ./php-src/configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
 
       - name: Make Micro
-        run: make ./php-src/micro
+        run: cd php-src && make micro
 
       - name: Build Forge Monitor
         run: ./application app:build --build-version=unreleased
