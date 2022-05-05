@@ -15,10 +15,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Clone PHP
-        run: git clone --single-branch --branch PHP-8.0.19 git@github.com:php/php-src.git
+        run: git clone --single-branch --branch PHP-8.0.19 https://github.com/php/php-src.git
 
       - name: Clone PHPMicro
-        run: git clone git@github.com:dixyes/phpmicro php-src/sapi/micro
+        run: git clone https://github.com/dixyes/phpmicro.git php-src/sapi/micro
 
       - name: Build
         run: ./buildconf --force
