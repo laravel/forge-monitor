@@ -20,17 +20,23 @@ jobs:
       - name: Clone PHPMicro
         run: git clone https://github.com/dixyes/phpmicro.git php-src/sapi/micro
 
+      - name: Move into php-src directory
+        run: cd php-src
+
+      - name: Apply PHPMicro Patch
+        run: patch -p1 < sapi/micro/patches/cli_checks.patch
+
       - name: Build
-        run: ./php-src/buildconf --force
+        run: ./buildconf --force
 
       - name: Configure
-        run: ./php-src/configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
+        run: ./configure --disable-phpdbg --disable-cgi --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
 
       - name: Make Micro
-        run: cd php-src && make micro
+        run: make micro
 
       - name: Build Forge Monitor
         run: ./application app:build --build-version=unreleased
 
       - name: Compile Forge Monitor
-        run: cat ./php-src/sapi/micro/micro.sfx builds/application > laravel-monitor
+        run: cat php-src/sapi/micro/micro.sfx forge-monitor/builds/application > /tmp/monitor

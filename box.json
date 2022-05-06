@@ -4,6 +4,7 @@
     "directories": [
         "app",
         "bootstrap",
+        "database",
         "config",
         "vendor"
     ],
