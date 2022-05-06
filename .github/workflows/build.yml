@@ -3,16 +3,13 @@ name: Build
 on: [push, pull_request]
 
 jobs:
-  build-forge-monitor:
-    name: Build Forge Monitor
+  prepare:
+    name: Compile PHP with Micro
     runs-on: ubuntu-latest
 
     steps:
       - name: Install Dependencies
         run: sudo apt-get -y install flex bison re2c
-
-      - name: Check out source code
-        uses: actions/checkout@v2
 
       - name: Clone PHP
         run: git clone --single-branch --branch PHP-8.0.19 https://github.com/php/php-src.git
@@ -30,10 +27,20 @@ jobs:
         run: ./buildconf --force
 
       - name: Configure
-        run: ./configure --disable-phpdbg --disable-cgi --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo
+        run: ./configure --disable-phpdbg --disable-cgi --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo --with-zlib
 
       - name: Make Micro
         run: make micro
+
+  build-forge-monitor:
+    needs: prepare
+
+    name: Build Forge Monitor
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v2
 
       - name: Build Forge Monitor
         run: ./application app:build --build-version=unreleased
