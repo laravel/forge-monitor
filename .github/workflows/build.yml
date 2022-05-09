@@ -17,20 +17,17 @@ jobs:
       - name: Clone PHPMicro
         run: git clone https://github.com/dixyes/phpmicro.git php-src/sapi/micro
 
-      - name: Move into php-src directory
-        run: cd php-src
-
       - name: Apply PHPMicro Patch
-        run: patch -p1 < sapi/micro/patches/cli_checks.patch
+        run: patch -p1 < sapi/micro/patches/cli_checks.patch php-src
 
       - name: Build
-        run: ./buildconf --force
+        run: ./php-src/buildconf --force
 
       - name: Configure
-        run: ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --enable-pdo --with-zlib --with-iconv --enable-filter --with-pdo-sqlite --with-sqlite3
+        run: ./php-src/configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --enable-pdo --with-zlib --with-iconv --enable-filter --with-pdo-sqlite --with-sqlite3
 
       - name: Make Micro
-        run: make micro
+        run: cd php-src && make micro
 
   build-forge-monitor:
     needs: prepare
