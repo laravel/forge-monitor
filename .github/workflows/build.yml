@@ -47,5 +47,3 @@ jobs:
 
       - name: Compile Forge Monitor
         run: cat php-src/sapi/micro/micro.sfx forge-monitor/builds/application > monitor
-
-      - name: Make monitor
