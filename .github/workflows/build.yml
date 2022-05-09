@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Install Dependencies
-        run: sudo apt-get -y install flex bison re2c
+        run: sudo apt-get -y install flex bison re2c libonig-dev libsqlite3-dev
 
       - name: Clone PHP
         run: git clone --single-branch --branch PHP-8.0.19 https://github.com/php/php-src.git
@@ -27,7 +27,7 @@ jobs:
         run: ./buildconf --force
 
       - name: Configure
-        run: ./configure --disable-phpdbg --disable-cgi --disable-all --enable-micro --enable-phar --with-ffi --enable-pdo --with-zlib
+        run: ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --enable-pdo --with-zlib --with-iconv --enable-filter --with-pdo-sqlite --with-sqlite3
 
       - name: Make Micro
         run: make micro
@@ -46,4 +46,6 @@ jobs:
         run: ./application app:build --build-version=unreleased
 
       - name: Compile Forge Monitor
-        run: cat php-src/sapi/micro/micro.sfx forge-monitor/builds/application > /tmp/monitor
+        run: cat php-src/sapi/micro/micro.sfx forge-monitor/builds/application > monitor
+
+      - name: Make monitor
