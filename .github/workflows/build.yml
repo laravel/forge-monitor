@@ -18,7 +18,7 @@ jobs:
         run: git clone https://github.com/dixyes/phpmicro.git php-src/sapi/micro
 
       - name: Apply PHPMicro Patch
-        run: patch -p1 < sapi/micro/patches/cli_checks.patch php-src
+        run: patch -p1 < php-src/sapi/micro/patches/cli_checks.patch php-src
 
       - name: Build
         run: ./php-src/buildconf --force
