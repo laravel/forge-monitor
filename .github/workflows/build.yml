@@ -58,7 +58,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: "${{ matrix.php }}"
+          php-version: "8.0"
           extensions: json, dom, curl, libxml, mbstring, zip
           coverage: none
         env:
