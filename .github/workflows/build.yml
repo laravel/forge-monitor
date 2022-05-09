@@ -29,6 +29,11 @@ jobs:
       - name: Make Micro
         run: cd php-src && make micro
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: micro
+          path: php-src/sapi/micro/micro.sfx
+
   build-forge-monitor:
     needs: prepare
 
@@ -42,5 +47,9 @@ jobs:
       - name: Build Forge Monitor
         run: ./application app:build --build-version=unreleased
 
+      - uses: actions/download-artifact@v2
+        with:
+          name: micro
+
       - name: Compile Forge Monitor
-        run: cat php-src/sapi/micro/micro.sfx forge-monitor/builds/application > monitor
+        run: cat php-src/sapi/micro/micro.sfx ./builds/application > monitor
