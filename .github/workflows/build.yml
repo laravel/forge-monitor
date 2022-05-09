@@ -75,8 +75,5 @@ jobs:
         with:
           name: micro
 
-      - name: 'Echo download path'
-        run: echo ${{steps.download.outputs.download-path}}
-
       - name: Compile Forge Monitor
-        run: cat ./php-src/sapi/micro/micro.sfx ./builds/application > monitor
+        run: cat ./micro.sfx ./builds/application > monitor
