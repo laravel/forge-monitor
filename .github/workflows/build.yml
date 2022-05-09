@@ -75,4 +75,4 @@ jobs:
           name: micro
 
       - name: Compile Forge Monitor
-        run: cat php-src/sapi/micro/micro.sfx ./builds/application > monitor
+        run: cat ./php-src/sapi/micro/micro.sfx ./builds/application > monitor
