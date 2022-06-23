@@ -3,7 +3,6 @@
 namespace App\Config;
 
 use Illuminate\Support\Arr;
-use RuntimeException;
 use Symfony\Component\Finder\Finder;
 
 class FileFinder

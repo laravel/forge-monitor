@@ -9,9 +9,9 @@ abstract class AbstractStat
 {
     use ExecuteCommands;
 
-    const OK = "OK";
-    const ALERT = "ALERT";
-    const UNKNOWN = "UNKNOWN";
+    public const OK = "OK";
+    public const ALERT = "ALERT";
+    public const UNKNOWN = "UNKNOWN";
 
     protected $totalResults;
     protected $lastState;

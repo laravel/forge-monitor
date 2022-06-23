@@ -4,7 +4,6 @@ namespace App\Commands;
 
 use App\Monitors\MonitorConfig;
 use Exception;
-use Illuminate\Console\Scheduling\Schedule;
 use LaravelZero\Framework\Commands\Command;
 
 abstract class AbstractStatCommand extends Command

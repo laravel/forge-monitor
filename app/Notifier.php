@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Alert;
 use App\Monitors\Monitor;
 use Illuminate\Support\Facades\Http;
 
