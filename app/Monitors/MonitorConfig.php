@@ -25,7 +25,7 @@ class MonitorConfig
     /**
      * Create a new monitor config instance.
      *
-     * @param  \App\Config\FileFinder $configFileFinder
+     * @param  \App\Config\FileFinder  $configFileFinder
      * @return void
      */
     public function __construct(FileFinder $configFileFinder)
@@ -38,7 +38,7 @@ class MonitorConfig
     /**
      * Return the configurations for a given stat type.
      *
-     * @param  array|string $types
+     * @param  array|string  $types
      * @return mixed
      */
     public function forType($types)
@@ -59,7 +59,7 @@ class MonitorConfig
     {
         $configFile = $this->configFileFinder->find('/\.monitor$/');
 
-        if (!$configFile) {
+        if (! $configFile) {
             return;
         }
 

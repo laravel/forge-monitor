@@ -7,7 +7,7 @@ trait InteractsWithCli
     /**
      * Write a string as information output if verbose enough.
      *
-     * @param  string $line
+     * @param  string  $line
      * @return void
      */
     protected function verboseInfo($line)

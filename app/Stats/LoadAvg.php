@@ -11,7 +11,7 @@ class LoadAvg extends AbstractStat implements Stat
     /**
      * Create a new Stat instance.
      *
-     * @param  \App\Monitors\Monitor $monitor
+     * @param  \App\Monitors\Monitor  $monitor
      * @return void
      */
     public function __construct(Monitor $monitor)
@@ -26,7 +26,7 @@ class LoadAvg extends AbstractStat implements Stat
      */
     public function sample()
     {
-        if (is_readable("/proc/cpuinfo")) {
+        if (is_readable('/proc/cpuinfo')) {
             $cores = (int) $this->executeCommand('cat /proc/cpuinfo | grep "^processor" | wc -l');
 
             // https://stackoverflow.com/a/38085813

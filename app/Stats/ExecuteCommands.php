@@ -9,7 +9,7 @@ trait ExecuteCommands
     /**
      * Execute a command.
      *
-     * @param  string $command
+     * @param  string  $command
      * @return string
      */
     public function executeCommand($command)

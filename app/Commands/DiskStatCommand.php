@@ -45,14 +45,14 @@ class DiskStatCommand extends AbstractStatCommand
     {
         // Don't run when no monitors are configured.
         if ($this->monitors->isEmpty()) {
-            $this->verboseInfo("No disk monitors configured...");
+            $this->verboseInfo('No disk monitors configured...');
 
             return;
         }
 
         $this->monitors->each(function ($monitor) {
             // Take the sample if we haven't done so already.
-            if (!$this->sampleTaken) {
+            if (! $this->sampleTaken) {
                 $this->sampleTaken = true;
 
                 return $monitor->stat()->sample();

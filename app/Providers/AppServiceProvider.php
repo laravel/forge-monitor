@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $homePath = (new Xdg())->getHomeDir();
 
-        if (!$path) {
+        if (! $path) {
             return $homePath;
         }
 

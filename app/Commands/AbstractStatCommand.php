@@ -32,7 +32,7 @@ abstract class AbstractStatCommand extends Command
     {
         parent::__construct();
 
-        if (!$this->statType) {
+        if (! $this->statType) {
             throw new Exception('No statType defined.');
         }
 

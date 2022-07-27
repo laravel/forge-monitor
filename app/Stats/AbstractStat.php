@@ -9,15 +9,22 @@ abstract class AbstractStat
 {
     use ExecuteCommands;
 
-    public const OK = "OK";
-    public const ALERT = "ALERT";
-    public const UNKNOWN = "UNKNOWN";
+    public const OK = 'OK';
+
+    public const ALERT = 'ALERT';
+
+    public const UNKNOWN = 'UNKNOWN';
 
     protected $totalResults;
+
     protected $lastState;
+
     protected $lastAlertState;
+
     protected $alertStreak = 0;
+
     protected $prevAlertStreak = 0;
+
     protected $okStreak = 0;
 
     /**
@@ -30,7 +37,7 @@ abstract class AbstractStat
     /**
      * Create a new Stat instance.
      *
-     * @param  \App\Monitors\Monitor $monitor
+     * @param  \App\Monitors\Monitor  $monitor
      * @return void
      */
     public function __construct(Monitor $monitor)
@@ -41,8 +48,8 @@ abstract class AbstractStat
     /**
      * Test whether the results array passed the monitor requirements.
      *
-     * @param  \App\Monitors\Monitor $monitor
-     * @param  array $results
+     * @param  \App\Monitors\Monitor  $monitor
+     * @param  array  $results
      * @return bool
      */
     protected function testResults(array $results)
@@ -93,6 +100,7 @@ abstract class AbstractStat
             } else {
                 Alert::createForMonitor($this->monitor, self::ALERT);
             }
+
             return;
         }
 
@@ -119,6 +127,6 @@ abstract class AbstractStat
      */
     protected function getOperator()
     {
-        return $this->monitor->operator == "gte" ? ">=" : "<=";
+        return $this->monitor->operator == 'gte' ? '>=' : '<=';
     }
 }
