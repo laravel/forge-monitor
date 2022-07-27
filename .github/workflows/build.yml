@@ -77,3 +77,9 @@ jobs:
 
       - name: Compile Forge Monitor
         run: cat ./micro.sfx ./builds/application > monitor
+
+      - name: Upload the binary to release
+        uses: actions/upload-artifact@v3
+        with:
+          name: monitor
+          path: monitor
