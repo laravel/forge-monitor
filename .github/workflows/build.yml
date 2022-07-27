@@ -20,7 +20,7 @@ jobs:
       - name: Apply PHPMicro Patch
         run: |
           cd php-src
-          patch -p1 < php-src/sapi/micro/patches/cli_checks_80.patch
+          patch -p1 < sapi/micro/patches/cli_checks_80.patch
 
       - name: Build
         run: |
