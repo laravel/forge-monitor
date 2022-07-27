@@ -49,8 +49,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out source code
-        uses: actions/checkout@v2
+      - name: Extract the tag version
+        id: tag
+        run: echo ::set-output name=tag::${GITHUB_REF##*v}
+
+      - name: Checkout the code
+        uses: actions/checkout@v3
 
       - name: Obtain Composer cache directory
         id: composer-cache
@@ -76,7 +80,7 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Build Forge Monitor
-        run: ./application app:build --build-version=unreleased
+        run: ./application app:build --build-version=${{ steps.tag.outputs.tag }}
 
       - uses: actions/download-artifact@v2
         id: download
