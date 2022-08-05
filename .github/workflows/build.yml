@@ -102,7 +102,8 @@ jobs:
 
       - uses: actions/cache@v3
         with:
-          name: micro
+          path: php-src/sapi/micro/micro.sfx
+          key: ${{ runner.os }}-micro-sfx
 
       - name: Compile Forge Monitor
         run: cat ./micro.sfx ./builds/application > monitor
