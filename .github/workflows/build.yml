@@ -35,26 +35,29 @@ jobs:
           cd php-src
           ./buildconf --force
 
-      - name: Configure
-        run: |
-          cd php-src
-          ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --enable-pdo --with-zlib --with-iconv --enable-filter --with-pdo-sqlite --with-sqlite3
-
       - name: Cache micro.sfx
         id: cache-micro-sfx
         uses: actions/cache@v3
         with:
           path: php-src/sapi/micro/micro.sfx
-          key: ${{ runner.os }}-micro-sfx
+          key: ${{ runner.os }}-micro-sfx-${{ hashFiles('**/php-src/sapi/micro/patches/cli_checks_80.patch') }}
+          restore-keys: |
+            ${{ runner.os }}-micro-sfx-
+
+      - name: Configure
+        if: steps.cache-micro-sfx.outputs.cache-hit != 'true'
+        run: |
+          cd php-src
+          ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --enable-pdo --with-zlib --with-iconv --enable-filter --with-pdo-sqlite --with-sqlite3
 
       - name: Make Micro
-        if: steps.cache-primes.outputs.cache-hit != 'true'
+        if: steps.cache-micro-sfx.outputs.cache-hit != 'true'
         run: |
           cd php-src
           make micro
 
       - uses: actions/upload-artifact@v2
-        if: steps.cache-primes.outputs.cache-hit != 'true'
+        if: steps.cache-micro-sfx.outputs.cache-hit != 'true'
         with:
           name: micro
           path: php-src/sapi/micro/micro.sfx
@@ -99,8 +102,7 @@ jobs:
       - name: Build Forge Monitor
         run: ./application app:build --build-version=${{ steps.tag.outputs.tag }}
 
-      - uses: actions/download-artifact@v2
-        id: download
+      - uses: actions/cache@v3
         with:
           name: micro
 
