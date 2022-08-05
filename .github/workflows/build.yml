@@ -8,14 +8,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+#      - name: Cache micro.sfx
+#        id: cache-micro-sfx
+#        uses: actions/cache@v3
+#        with:
+#          path: micro-sfx
+#          key: ${{ runner.os }}-micro-sfx
+
       - name: Install Dependencies
         run: sudo apt-get -y install flex bison re2c libonig-dev libsqlite3-dev
 
-      - name: Clone PHP
-        run: git clone --single-branch --branch PHP-8.0.19 https://github.com/php/php-src.git
+      - name: Checkout PHP
+        uses: actions/checkout@v3
+        with:
+          repository: php/php-src
+          ref: PHP-8.0.19
+          path: php-src
 
-      - name: Clone PHPMicro
-        run: git clone https://github.com/dixyes/phpmicro.git php-src/sapi/micro
+      - name: Checkout PHPMicro
+        uses: actions/checkout@v3
+        with:
+          repository: php/phpmicro
+          ref: master
+          path: php-src/sapi/micro
 
       - name: Apply PHPMicro Patch
         run: |
