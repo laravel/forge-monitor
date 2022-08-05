@@ -40,9 +40,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: php-src/sapi/micro/micro.sfx
-          key: ${{ runner.os }}-micro-sfx-${{ hashFiles('**/php-src/sapi/micro/patches/cli_checks_80.patch') }}
-          restore-keys: |
-            ${{ runner.os }}-micro-sfx-
 
       - name: Configure
         if: steps.cache-micro-sfx.outputs.cache-hit != 'true'
