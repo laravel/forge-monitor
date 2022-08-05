@@ -40,22 +40,22 @@ jobs:
         uses: actions/cache@v3
         with:
           path: php-src/sapi/micro/micro.sfx
-          key: ${{ runner.os }}-micro-sfx-dom
+          key: ${{ runner.os }}-micro-sfx-libxml
 
       - name: Configure
-        if: steps.cache-micro-sfx.outputs.cache-hit != 'true'
+        if: steps.cache-micro-sfx-libxml.outputs.cache-hit != 'true'
         run: |
           cd php-src
-          ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-dom --enable-phar --enable-pdo --with-zlib --with-iconv --enable-filter --with-pdo-sqlite --with-sqlite3
+          ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --enable-pdo --with-libxml --with-zlib --with-iconv --enable-filter --with-pdo-sqlite --with-sqlite3
 
       - name: Make Micro
-        if: steps.cache-micro-sfx.outputs.cache-hit != 'true'
+        if: steps.cache-micro-sfx-libxml.outputs.cache-hit != 'true'
         run: |
           cd php-src
           make micro
 
       - uses: actions/upload-artifact@v2
-        if: steps.cache-micro-sfx.outputs.cache-hit != 'true'
+        if: steps.cache-micro-sfx-libxml.outputs.cache-hit != 'true'
         with:
           name: micro
           path: php-src/sapi/micro/micro.sfx
@@ -103,7 +103,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: php-src/sapi/micro/micro.sfx
-          key: ${{ runner.os }}-micro-sfx-dom
+          key: ${{ runner.os }}-micro-sfx-libxml
 
       - name: Compile Forge Monitor
         run: cat php-src/sapi/micro/micro.sfx ./builds/application > monitor
