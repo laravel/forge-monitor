@@ -28,7 +28,7 @@ jobs:
       - name: Checkout PHPMicro
         uses: actions/checkout@v3
         with:
-          repository: php/phpmicro
+          repository: dixyes/phpmicro
           ref: master
           path: php-src/sapi/micro
 
