@@ -40,7 +40,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: php-src/sapi/micro/micro.sfx
-          key: ${{ runner.os }}-micro-sfx
+          key: ${{ runner.os }}-micro-sfx-dom
 
       - name: Configure
         if: steps.cache-micro-sfx.outputs.cache-hit != 'true'
@@ -103,7 +103,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: php-src/sapi/micro/micro.sfx
-          key: ${{ runner.os }}-micro-sfx
+          key: ${{ runner.os }}-micro-sfx-dom
 
       - name: Compile Forge Monitor
         run: cat php-src/sapi/micro/micro.sfx ./builds/application > monitor
