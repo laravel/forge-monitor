@@ -72,6 +72,10 @@ class DiskStatCommand extends AbstractStatCommand
      */
     public function schedule(Schedule $schedule)
     {
-        $schedule->command(static::class)->everyMinute();
+        if (config('app.env') === 'production') {
+            $schedule->exec('/root/forge-monitor/monitor stat:disk')->everyMinute();
+        } else {
+            $schedule->command(static::class)->everyMinute();
+        }
     }
 }

@@ -42,6 +42,10 @@ class CleanupCommand extends Command
      */
     public function schedule(Schedule $schedule)
     {
-        $schedule->command(static::class)->everyMinute();
+        if (config('app.env') === 'production') {
+            $schedule->exec('/root/forge-monitor/monitor stat:clean-up')->everyMinute();
+        } else {
+            $schedule->command(static::class)->everyMinute();
+        }
     }
 }

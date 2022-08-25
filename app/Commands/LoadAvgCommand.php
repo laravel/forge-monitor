@@ -72,6 +72,10 @@ class LoadAvgCommand extends AbstractStatCommand
      */
     public function schedule(Schedule $schedule)
     {
-        $schedule->command(static::class)->everyMinute();
+        if (config('app.env') === 'production') {
+            $schedule->exec('/root/forge-monitor/monitor stat:load')->everyMinute();
+        } else {
+            $schedule->command(static::class)->everyMinute();
+        }
     }
 }
