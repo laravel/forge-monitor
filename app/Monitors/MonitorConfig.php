@@ -45,22 +45,20 @@ class MonitorConfig
     {
         $types = Arr::wrap($types);
 
-        if ($this->config) {
-            return $this->config->whereIn('type', $types);
-        }
+        return $this->config->whereIn('type', $types);
     }
 
     /**
      * Parse the config file into a collection.
      *
-     * @return \Illuminate\Support\Collection|void
+     * @return \Illuminate\Support\Collection
      */
     protected function parseConfig()
     {
         $configFile = $this->configFileFinder->find('/\.monitor$/');
 
         if (! $configFile) {
-            return;
+            return collect();
         }
 
         return collect(Toml::ParseFile($configFile))->transform(function ($monitor, $key) {
