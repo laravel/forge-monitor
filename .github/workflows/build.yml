@@ -98,7 +98,7 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Build Forge Monitor
-        run: ./application app:build --build-version=${{ steps.tag.outputs.tag }}
+        run: ./application app:build --build-version=${{ github.ref_name }}
 
       - uses: actions/cache@v3
         with:
