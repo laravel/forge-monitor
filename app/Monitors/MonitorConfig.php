@@ -9,11 +9,9 @@ use Yosymfony\Toml\Toml;
 class MonitorConfig
 {
     /**
-     * The config file finder instance.
-     *
-     * @var \App\Config\FileFinder
+     * @var \Symfony\Component\Finder\SplFileInfo
      */
-    protected $configFileFinder;
+    protected $configFile;
 
     /**
      * The base config collection.
@@ -30,8 +28,7 @@ class MonitorConfig
      */
     public function __construct(FileFinder $configFileFinder)
     {
-        $this->configFileFinder = $configFileFinder;
-
+        $this->configFile = $configFileFinder->find('/\.monitor/');
         $this->config = $this->parseConfig();
     }
 
@@ -55,13 +52,11 @@ class MonitorConfig
      */
     protected function parseConfig()
     {
-        $configFile = $this->configFileFinder->find('/\.monitor$/');
-
-        if (! $configFile) {
+        if (! $this->configFile) {
             return collect();
         }
 
-        return collect(Toml::ParseFile($configFile))->transform(function ($monitor, $key) {
+        return collect(Toml::ParseFile($this->configFile->getPathname()))->transform(function ($monitor, $key) {
             return new Monitor(
                 $key,
                 Arr::get($monitor, 'type'),
@@ -71,5 +66,15 @@ class MonitorConfig
                 Arr::get($monitor, 'token')
             );
         });
+    }
+
+    /**
+     * Get the config path.
+     *
+     * @return \Symfony\Component\Finder\SplFileInfo
+     */
+    public function getConfigPath()
+    {
+        return $this->configFile;
     }
 }

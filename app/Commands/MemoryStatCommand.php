@@ -43,6 +43,8 @@ class MemoryStatCommand extends AbstractStatCommand
             return;
         }
 
+        $this->verboseInfo(sprintf('Monitor Config: %s...', $this->monitorConfig->getConfigPath()));
+
         // Sample the memory stat.
         app(Memory::class)->sample();
 

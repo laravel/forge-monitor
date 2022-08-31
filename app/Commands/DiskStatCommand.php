@@ -44,11 +44,15 @@ class DiskStatCommand extends AbstractStatCommand
     public function handle()
     {
         // Don't run when no monitors are configured.
-        if ($this->monitors->isEmpty()) {
-            $this->verboseInfo('No disk monitors configured...');
+//        if ($this->monitors->isEmpty()) {
+//            $this->verboseInfo('No disk monitors configured...');
+//
+//            return;
+//        }
 
-            return;
-        }
+        $this->verboseInfo(sprintf('Monitor Config: %s...', $this->monitorConfig->getConfigPath()));
+
+        return;
 
         $this->monitors->each(function ($monitor) {
             // Take the sample if we haven't done so already.

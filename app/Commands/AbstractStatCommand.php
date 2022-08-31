@@ -9,6 +9,13 @@ use LaravelZero\Framework\Commands\Command;
 abstract class AbstractStatCommand extends Command
 {
     /**
+     * The monitor config instance.
+     *
+     * @var \App\Monitors\MonitorConfig
+     */
+    protected $monitorConfig;
+
+    /**
      * The configured monitors for the stat.
      *
      * @var \Illuminate\Support\Collection
@@ -36,6 +43,7 @@ abstract class AbstractStatCommand extends Command
             throw new Exception('No statType defined.');
         }
 
+        $this->monitorConfig = $monitorConfig;
         $this->monitors = $monitorConfig->forType($this->statType);
     }
 }

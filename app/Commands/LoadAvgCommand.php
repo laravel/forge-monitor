@@ -50,6 +50,8 @@ class LoadAvgCommand extends AbstractStatCommand
             return;
         }
 
+        $this->verboseInfo(sprintf('Monitor Config: %s...', $this->monitorConfig->getConfigPath()));
+
         $this->monitors->each(function ($monitor) {
             // Take the sample if we haven't done so already.
             if (! $this->sampleTaken) {
