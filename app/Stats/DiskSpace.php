@@ -3,7 +3,6 @@
 namespace App\Stats;
 
 use App\DiskUsage;
-use App\Monitors\Monitor;
 use Illuminate\Support\Facades\DB;
 
 class DiskSpace extends AbstractStat implements Stat

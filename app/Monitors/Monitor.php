@@ -2,7 +2,6 @@
 
 namespace App\Monitors;
 
-use App\Stats\CpuLoad;
 use App\Stats\DiskSpace;
 use App\Stats\FreeMemory;
 use App\Stats\LoadAvg;

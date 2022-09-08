@@ -17,8 +17,8 @@ class Alert extends Model
     /**
      * Create an alert for a monitor's state.
      *
-     * @param  \App\Monitors\Monitor $monitor
-     * @param  string $state
+     * @param  \App\Monitors\Monitor  $monitor
+     * @param  string  $state
      * @return $this
      */
     public static function createForMonitor(Monitor $monitor, $state)

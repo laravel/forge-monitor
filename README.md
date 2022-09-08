@@ -1,13 +1,29 @@
 # Forge Monitor
 
-Laravel Forge monitoring built with Laravel.
+Laravel Forge monitoring built with [Laravel Zero](https://laravel-zero.com).
+
+## Building & Compiling
+
+The monitoring agent is built using Laravel Zero, a CLI framework for console applications. We then take the generated PHAR archive and compile this with [phpmicro](https://github.com/easysoft/phpmicro).
+
+You can check the `build.yml` file to see the steps required to compile the application.
+
+## Installation
+
+The monitoring agent is expected to be installed to `/root/forge-monitor`. You'll also need to `chmod +x monitor` so that it can be executed.
+
+You'll then need to create a `.env` file in the same directory:
+
+```env
+DB_DATABASE=/root/forge-monitor/database.sqlite
+```
 
 ## Running
 
 You can run Forge Monitor with:
 
 ```bash
-php artisan stat:mem
+./monitor stat:mem
 ```
 
 The available stat commands are:
@@ -31,7 +47,7 @@ For the `disk` monitors, this threshold will only need to be met once at any giv
 
 ## Data Storage
 
-Forge Monitor writes to a local SQLite database at `./database/database.db`, giving us a history of recent stat points.
+Forge Monitor writes to a local SQLite database, giving us a history of recent stat points.
 
 After a sample of the stat has been taken, we will check whether each configured monitor of the stat type has been met. This can be done with SQL queries executed against the DB.
 

@@ -1,0 +1,115 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  prepare:
+    name: Compile PHP with Micro
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Install Dependencies
+        run: sudo apt-get -y install flex bison re2c libonig-dev libsqlite3-dev
+
+      - name: Checkout PHP
+        uses: actions/checkout@v3
+        with:
+          repository: php/php-src
+          ref: PHP-8.0.19
+          path: php-src
+
+      - name: Checkout PHPMicro
+        uses: actions/checkout@v3
+        with:
+          repository: dixyes/phpmicro
+          ref: master
+          path: php-src/sapi/micro
+
+      - name: Apply PHPMicro Patch
+        run: |
+          cd php-src
+          patch -p1 < sapi/micro/patches/cli_checks_80.patch
+
+      - name: Build
+        run: |
+          cd php-src
+          ./buildconf --force
+
+      - name: Cache micro.sfx
+        id: cache-micro-sfx
+        uses: actions/cache@v3
+        with:
+          path: php-src/sapi/micro/micro.sfx
+          key: ${{ runner.os }}-micro-sfx-libxmldom
+
+      - name: Configure
+        if: steps.cache-micro-sfx-libxmldom.outputs.cache-hit != 'true'
+        run: |
+          cd php-src
+          ./configure --disable-phpdbg --disable-cgi --disable-cli --disable-all --enable-micro --enable-phar --enable-pdo --enable-dom --with-libxml --with-zlib --with-iconv --enable-filter --with-pdo-sqlite --with-sqlite3
+
+      - name: Make Micro
+        if: steps.cache-micro-sfx-libxmldom.outputs.cache-hit != 'true'
+        run: |
+          cd php-src
+          make micro
+
+      - uses: actions/upload-artifact@v2
+        if: steps.cache-micro-sfx-libxmldom.outputs.cache-hit != 'true'
+        with:
+          name: micro
+          path: php-src/sapi/micro/micro.sfx
+
+  build-forge-monitor:
+    needs: prepare
+
+    name: Build Forge Monitor
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract the tag version
+        id: tag
+        run: echo ::set-output name=tag::${GITHUB_REF##*v}
+
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Obtain Composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.0"
+          extensions: json, dom, curl, libxml, mbstring, zip
+          coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+      - name: Build Forge Monitor
+        run: ./application app:build --build-version=${{ github.ref_name }}
+
+      - uses: actions/cache@v3
+        with:
+          path: php-src/sapi/micro/micro.sfx
+          key: ${{ runner.os }}-micro-sfx-libxmldom
+
+      - name: Compile Forge Monitor
+        run: cat php-src/sapi/micro/micro.sfx ./builds/application > monitor
+
+      - name: Upload the binary to release
+        uses: actions/upload-artifact@v3
+        with:
+          name: monitor
+          path: monitor

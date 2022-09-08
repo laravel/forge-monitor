@@ -9,11 +9,9 @@ use Yosymfony\Toml\Toml;
 class MonitorConfig
 {
     /**
-     * The config file finder instance.
-     *
-     * @var \App\Config\FileFinder
+     * @var \Symfony\Component\Finder\SplFileInfo
      */
-    protected $configFileFinder;
+    protected $configFile;
 
     /**
      * The base config collection.
@@ -25,45 +23,40 @@ class MonitorConfig
     /**
      * Create a new monitor config instance.
      *
-     * @param  \App\Config\FileFinder $configFileFinder
+     * @param  \App\Config\FileFinder  $configFileFinder
      * @return void
      */
     public function __construct(FileFinder $configFileFinder)
     {
-        $this->configFileFinder = $configFileFinder;
-
+        $this->configFile = $configFileFinder->find('/\.monitor/');
         $this->config = $this->parseConfig();
     }
 
     /**
      * Return the configurations for a given stat type.
      *
-     * @param  array|string $types
+     * @param  array|string  $types
      * @return mixed
      */
     public function forType($types)
     {
         $types = Arr::wrap($types);
 
-        if ($this->config) {
-            return $this->config->whereIn('type', $types);
-        }
+        return $this->config->whereIn('type', $types);
     }
 
     /**
      * Parse the config file into a collection.
      *
-     * @return \Illuminate\Support\Collection|void
+     * @return \Illuminate\Support\Collection
      */
     protected function parseConfig()
     {
-        $configFile = $this->configFileFinder->find('/\.monitor$/');
-
-        if (!$configFile) {
-            return;
+        if (! $this->configFile) {
+            return collect();
         }
 
-        return collect(Toml::ParseFile($configFile))->transform(function ($monitor, $key) {
+        return collect(Toml::ParseFile($this->configFile->getPathname()))->transform(function ($monitor, $key) {
             return new Monitor(
                 $key,
                 Arr::get($monitor, 'type'),
@@ -73,5 +66,15 @@ class MonitorConfig
                 Arr::get($monitor, 'token')
             );
         });
+    }
+
+    /**
+     * Get the config path.
+     *
+     * @return \Symfony\Component\Finder\SplFileInfo
+     */
+    public function getConfigPath()
+    {
+        return $this->configFile;
     }
 }
