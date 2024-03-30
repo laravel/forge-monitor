@@ -3,6 +3,7 @@
 namespace App\Monitors;
 
 use App\Stats\CpuLoad;
+use App\Stats\CpuUsage;
 use App\Stats\DiskSpace;
 use App\Stats\FreeMemory;
 use App\Stats\LoadAvg;
@@ -74,6 +75,7 @@ class Monitor
     public function stat()
     {
         switch ($this->type) {
+            case 'cpu': return new CpuUsage($this);
             case 'disk': return new DiskSpace($this);
             case 'cpu_load': return new LoadAvg($this);
             case 'free_memory': return new FreeMemory($this);
