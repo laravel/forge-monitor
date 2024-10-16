@@ -12,6 +12,7 @@ php artisan stat:mem
 
 The available stat commands are:
 
+- `stat:cpu`
 - `stat:disk`
 - `stat:load`
 - `stat:mem`
@@ -20,7 +21,8 @@ The available stat commands are:
 
 Forge Monitor provides alerting for several monitor types:
 
-- `cpu_load` - CPU Load (%)
+- `cpu_load` - System Load (%)
+- `cpu` - CPU Usage (%)
 - `disk` - Free Disk Space (%)
 - `free_memory` - Free Memory (%)
 - `used_memory` - Used Memory (%)
