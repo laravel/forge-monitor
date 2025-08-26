@@ -4,6 +4,7 @@ namespace App\Stats;
 
 use App\Alert;
 use App\Monitors\Monitor;
+use stdClass;
 
 abstract class AbstractStat
 {
@@ -48,6 +49,10 @@ abstract class AbstractStat
     protected function testResults(array $results)
     {
         $this->totalResults = count($results);
+
+        if ($this->totalResults === 1) {
+            $this->reportInitialState($results[0]);
+        }
 
         // Not enough data to check.
         if ($this->totalResults < $this->monitor->minutes) {
@@ -109,6 +114,17 @@ abstract class AbstractStat
             }
         } else {
             // Throw exception? Unknown state.
+        }
+    }
+
+    /**
+     * Report the initial state for the monitor.
+     *
+     * @return void
+     */
+    protected function reportInitialState(stdClass $result) {
+        if ($result->lastState === self::UNKNOWN) {
+            Alert::createForMonitor($this->monitor, $result->currentState);
         }
     }
 
