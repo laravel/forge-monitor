@@ -28,11 +28,14 @@ class Memory implements Stat
     /**
      * Test the stat.
      *
+     * Memory is a sampling-only base class. FreeMemory and UsedMemory
+     * handle the actual threshold testing for their respective metrics.
+     *
      * @return bool
      */
     public function test()
     {
-        //
+        return false;
     }
 
     /**
