@@ -48,10 +48,12 @@ class LoadAvg extends AbstractStat implements Stat
      */
     public function test()
     {
-        $op = $this->getOperator();
+        $comparison = $this->getOperator() === '>='
+            ? "load_avg_percent >= ? THEN 'ALERT' ELSE 'OK'"
+            : "load_avg_percent <= ? THEN 'ALERT' ELSE 'OK'";
 
         $results = DB::select("SELECT
-    CASE WHEN load_avg_percent {$op} ? THEN 'ALERT' ELSE 'OK' END AS currentState,
+    CASE WHEN {$comparison} END AS currentState,
     IFNULL(alerts.monitor_state, 'UNKNOWN') AS lastState
 FROM (
     SELECT * FROM load_avgs WHERE created_at >= DATETIME('NOW', ?) ORDER BY created_at DESC LIMIT ?
