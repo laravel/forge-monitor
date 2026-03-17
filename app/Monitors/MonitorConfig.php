@@ -63,15 +63,30 @@ class MonitorConfig
             return;
         }
 
-        return collect(Toml::ParseFile($configFile))->transform(function ($monitor, $key) {
-            return new Monitor(
-                $key,
-                Arr::get($monitor, 'type'),
-                Arr::get($monitor, 'operator'),
-                Arr::get($monitor, 'threshold'),
-                Arr::get($monitor, 'minutes', 0), // Disk requires no minutes.
-                Arr::get($monitor, 'token')
-            );
-        });
+        $validTypes = ['disk', 'cpu_load', 'free_memory', 'used_memory'];
+        $validOperators = ['gte', 'lte'];
+
+        return collect(Toml::ParseFile($configFile))
+            ->filter(function ($monitor) use ($validTypes, $validOperators) {
+                $type = Arr::get($monitor, 'type');
+                $operator = Arr::get($monitor, 'operator');
+                $threshold = Arr::get($monitor, 'threshold');
+                $token = Arr::get($monitor, 'token');
+
+                return $type && in_array($type, $validTypes)
+                    && $operator && in_array($operator, $validOperators)
+                    && $threshold !== null
+                    && $token;
+            })
+            ->transform(function ($monitor, $key) {
+                return new Monitor(
+                    $key,
+                    Arr::get($monitor, 'type'),
+                    Arr::get($monitor, 'operator'),
+                    Arr::get($monitor, 'threshold'),
+                    Arr::get($monitor, 'minutes', 0), // Disk requires no minutes.
+                    Arr::get($monitor, 'token')
+                );
+            });
     }
 }
