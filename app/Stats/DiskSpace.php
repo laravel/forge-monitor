@@ -36,10 +36,12 @@ class DiskSpace extends AbstractStat implements Stat
      */
     public function test()
     {
-        $op = $this->getOperator();
+        $comparison = $this->getOperator() === '>='
+            ? "used >= ? THEN 'ALERT' ELSE 'OK'"
+            : "used <= ? THEN 'ALERT' ELSE 'OK'";
 
         $results = DB::select("SELECT
-    CASE WHEN used {$op} ? THEN 'ALERT' ELSE 'OK' END AS currentState,
+    CASE WHEN {$comparison} END AS currentState,
     IFNULL(alerts.monitor_state, 'UNKNOWN') AS lastState
 FROM (
     SELECT * FROM disk_usages ORDER BY created_at DESC LIMIT 1

@@ -23,10 +23,12 @@ class FreeMemory extends AbstractStat implements Stat
      */
     public function test()
     {
-        $op = $this->getOperator();
+        $comparison = $this->getOperator() === '>='
+            ? "free >= ? THEN 'ALERT' ELSE 'OK'"
+            : "free <= ? THEN 'ALERT' ELSE 'OK'";
 
         $results = DB::select("SELECT
-    CASE WHEN free {$op} ? THEN 'ALERT' ELSE 'OK' END AS currentState,
+    CASE WHEN {$comparison} END AS currentState,
     IFNULL(alerts.monitor_state, 'UNKNOWN') AS lastState
 FROM (
     SELECT * FROM memory_usages WHERE created_at >= DATETIME('NOW', ?) ORDER BY created_at DESC LIMIT ?
